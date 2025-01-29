@@ -20,7 +20,7 @@ const ResultsPage = () => {
             },
           }
         );
-
+        console.log("Job Data:", response.data);
         setJobs(response.data.data); // Update based on API structure
 
         setLoading(false);
@@ -46,7 +46,8 @@ const ResultsPage = () => {
               job={{
                 title: job.job_title,
                 company: job.employer_name,
-                location: job.job_city || "Remote",
+                location: job.job_location || "Remote",
+                description: job.job_description,
               }}
             />
           ))}

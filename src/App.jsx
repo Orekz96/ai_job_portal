@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Navbar from "./components/Navbar";
+import JobDetails from "./pages/JobDetails";
 // import JobCard from "./components/JobCard";
 import Footer from "./components/Footer";
 import ResultsPage from "./pages/ResultsPage";
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/results" element={<ResultsPage />} />
+        <Route path="/job/:id" element={<JobDetails />} />
         {/* <JobCard /> */}
       </Routes>
       <Footer />
