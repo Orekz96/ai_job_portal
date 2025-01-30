@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 
 const JobDetails = () => {
-  const { id } = useParams(); // Job ID from URL
-  const location = useLocation(); // Access passed state
-  const job = location.state?.job; // Retrieve job details
+  const { id } = useParams();
+  const location = useLocation();
+  const job = location.state?.job;
+
+  const [savedJobs, setSavedJobs] = useState([]);
+
+  useEffect(() => {
+    const storedJobs = JSON.parse(localStorage.getItem("savedJobs")) || [];
+    setSavedJobs(storedJobs);
+  }, []);
+
+  const saveJob = () => {
+    const updatedJobs = [...savedJobs, job];
+    setSavedJobs(updatedJobs);
+    localStorage.setItem("savedJobs", JSON.stringify(updatedJobs));
+    alert("Job saved successfully! 🎉");
+  };
 
   if (!job) {
     return <p className="text-center text-red-500">Job details not found.</p>;
@@ -19,30 +33,25 @@ const JobDetails = () => {
       <div className="mt-4">
         <h2 className="text-xl font-semibold">Job Description</h2>
         <p className="text-gray-600">
-          {job.description || "No description available for this job."}
+          {job.description || "No description available."}
         </p>
       </div>
+
       <div className="mt-4">
         <h2 className="text-xl font-semibold">Salary</h2>
         <p className="text-green-500">
-          {job.job_min_salary
-            ? `$${job.job_min_salary} - $${job.job_max_salary}`
+          {job.min_salary
+            ? `$${job.min_salary} - $${job.max_salary}`
             : "Not provided"}
         </p>
       </div>
 
-      {job.job_apply_link ? (
-        <a
-          href={job.apply_link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block mt-6 px-6 py-3 bg-blue-500 text-white text-center rounded-lg hover:bg-blue-600"
-        >
-          Apply Now
-        </a>
-      ) : (
-        <p className="text-gray-500 mt-6">Application link not available.</p>
-      )}
+      <button
+        onClick={saveJob}
+        className="mt-6 px-6 py-3 bg-indigo-500 text-white text-center rounded-lg hover:bg-indigo-600"
+      >
+        Save Job
+      </button>
     </div>
   );
 };
