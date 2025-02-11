@@ -9,9 +9,9 @@ const Dashboard = () => {
   }, []);
 
   const removeJob = (jobId) => {
-    const updatedJobs = savedJobs.filter((job) => job.job_id !== jobId);
+    const updatedJobs = savedJobs.filter((job) => job.job_id !== jobId); // Remove only the clicked job
     setSavedJobs(updatedJobs);
-    localStorage.setItem("savedJobs", JSON.stringify(updatedJobs));
+    localStorage.setItem("savedJobs", JSON.stringify(updatedJobs)); // Update local storage
   };
 
   return (
